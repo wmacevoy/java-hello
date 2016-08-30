@@ -11,9 +11,8 @@ import static kiss.API.*;
  *
  * @author wmacevoy
  */
-public class HelloWorld {
-    
-    void untestRun() {
+public class HelloWorld {    
+    void testRun() {
         outExpect("Hello!");
         run();
         outClose();
