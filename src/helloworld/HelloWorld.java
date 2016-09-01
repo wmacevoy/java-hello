@@ -7,10 +7,7 @@ package helloworld;
 
 import static kiss.API.*;
 
-/**
- *
- * @author wmacevoy
- */
+
 public class HelloWorld {    
     void testRun() {
         outExpect("Hello!");
@@ -19,6 +16,8 @@ public class HelloWorld {
     }
     
     void run() {
-        println("Hello!");
+        println("Hello World!");
+        
+        println("How are you?");
     }
 }
