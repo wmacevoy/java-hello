@@ -10,14 +10,12 @@ import static kiss.API.*;
 
 public class HelloWorld {    
     void testRun() {
-        outExpect("Hello!");
+        outExpect("Hello World!");
         run();
         outClose();
     }
     
     void run() {
         println("Hello World!");
-        
-        println("How are you?");
     }
 }
