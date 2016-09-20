@@ -5,18 +5,49 @@
  */
 package helloworld;
 
-import static kiss.API.abs;
-import static kiss.API.pause;
+import static kiss.API.*;
 
 /**
  *
  * @author wmacevoy
  */
+
+enum Timezone {
+    MST,
+    UTC
+};
+
 public class TimezoneClock extends Clock {
+    TimezoneClock(Timezone tz) {
+        setTimezone(tz);
+    }
+    
+    TimezoneClock() {
+        setTimezone(Timezone.UTC);
+    }
+    
+    void setTimezone(Timezone tz) {
+        super.setHours(time()/3600);
+        super.start();
+        switch(tz) {
+            case MST : timezoneShift = -7*3600; break;
+            case UTC : timezoneShift =  0*3600; break;
+        }
+    }
+    
+    double mod(double a, double b) {
+        double u = a/b;
+        return b*(u-Math.floor(u));
+    }
     double timezoneShift = 0.0;
     @Override 
     double getHours() {
-        return 0;
+        return mod(super.getHours()+timezoneShift,12.0);
+    }
+    
+    @Override
+    void setHours(double _hours) {
+        super.setHours(mod(_hours - timezoneShift,12.0));
     }
        
     void testGetTime() {
@@ -41,6 +72,11 @@ public class TimezoneClock extends Clock {
         double now = clock.getHours();
         double shouldBe = 1.00 + 1.0/3600.0;
         assert abs(now-shouldBe) < 0.1/3600.0;
+    }
+    
+    void testMST() {
+        Clock clock = new TimezoneClock(Timezone.MST);
+        println("time: " + clock.getHours());
     }
  
     
