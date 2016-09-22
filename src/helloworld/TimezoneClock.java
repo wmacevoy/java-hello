@@ -14,6 +14,7 @@ import static kiss.API.*;
 
 enum Timezone {
     MST,
+    MDT,
     UTC
 };
 
@@ -30,8 +31,10 @@ public class TimezoneClock extends Clock {
         super.setHours(time()/3600);
         super.start();
         switch(tz) {
-            case MST : timezoneShift = -7*3600; break;
-            case UTC : timezoneShift =  0*3600; break;
+            case MST : timezoneShift = -7; break;
+            case MDT : timezoneShift = -6; break;
+            case UTC : timezoneShift =  0; break;
+            default : throw new UnsupportedOperationException("unknown timezone"); 
         }
     }
     
@@ -39,7 +42,9 @@ public class TimezoneClock extends Clock {
         double u = a/b;
         return b*(u-Math.floor(u));
     }
+
     double timezoneShift = 0.0;
+
     @Override 
     double getHours() {
         return mod(super.getHours()+timezoneShift,12.0);
@@ -75,8 +80,9 @@ public class TimezoneClock extends Clock {
     }
     
     void testMST() {
-        Clock clock = new TimezoneClock(Timezone.MST);
-        println("time: " + clock.getHours());
+        TimezoneClock clock = new TimezoneClock(Timezone.MDT);
+        println("tzShift: " + clock.timezoneShift);
+        println("time: " + asInt(clock.getHours()) + ":" + asInt(clock.getMinutes()));
     }
  
     
