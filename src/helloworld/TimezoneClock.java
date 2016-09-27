@@ -84,6 +84,16 @@ public class TimezoneClock extends Clock {
         println("tzShift: " + clock.timezoneShift);
         println("time: " + asInt(clock.getHours()) + ":" + asInt(clock.getMinutes()));
     }
+    
+    @Override
+    public boolean equals(Object object) {
+        if (object instanceof TimezoneClock) {
+            return timezoneShift == ((TimezoneClock)object).timezoneShift 
+                    && super.equals(object);
+        } else {
+            return false;
+        }
+    }
  
     
 }
